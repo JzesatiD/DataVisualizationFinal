@@ -68,7 +68,8 @@ app.layout = html.Div([
 # Define the callback function to update the input container based on the selected statistics
 @app.callback(
     Output(component_id='select-year', component_property='disabled'),
-    Input(component_id='dropdown-statistics',component_property='value'))
+    Input(component_id='dropdown-statistics',component_property='value')
+)
 
 def update_input_container(selected_statistics):
     if selected_statistics =='Yearly Statistics': 
@@ -81,7 +82,8 @@ def update_input_container(selected_statistics):
 @app.callback(
     Output(component_id='output-container', component_property='children'),
     [Input(component_id='dropdown-statistics', component_property='value'), 
-	Input(component_id='select-year', component_property='value')])
+	Input(component_id='select-year', component_property='value')]
+)
 
 
 def update_output_container(selected_statistics, input_year):
@@ -187,8 +189,8 @@ def update_output_container(selected_statistics, input_year):
             html.Div(className='chart-item', children=[html.Div(children=Y_chart1),html.Div(children=Y_chart2)],style={'display':'flex'}),
             html.Div(className='chart-item', children=[html.Div(children=Y_chart3),html.Div(children=Y_chart4)],style={'display': 'flex'})
             ]
-    else:
-	return None
+    #else:
+	#return None
 
 # Run the Dash app
 if __name__ == '__main__':
