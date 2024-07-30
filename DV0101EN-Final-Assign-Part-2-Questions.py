@@ -3,7 +3,6 @@
 
 # In[ ]:
 
-
 import dash
 import more_itertools
 from dash import dcc
@@ -145,7 +144,6 @@ def update_output_container(selected_statistics, input_year):
     elif (input_year and selected_statistics=='Yearly Statistics') :
         yearly_data = data[data['Year'] == input_year]
                               
-              
 #plot 1 Yearly Automobile sales using line chart for the whole period.
         # grouping data for plotting.
         # Hint:Use the columns Year and Automobile_Sales.
@@ -176,7 +174,7 @@ def update_output_container(selected_statistics, input_year):
 
     # Plot 4 Total Advertisement Expenditure for each vehicle using pie chart
           # grouping data for plotting.
-          # Hint:Use the columns Vehicle_Type and Advertising_Expenditure
+          # Hint: Use the columns Vehicle_Type and Advertising_Expenditure
     exp_data=yearly_data.groupby('Vehicle_Type')['Advertising_Expenditure'].sum().reset_index()
     Y_chart4 = dcc.Graph(
         figure=px.pie(exp_data, 
@@ -189,8 +187,8 @@ def update_output_container(selected_statistics, input_year):
             html.Div(className='chart-item', children=[html.Div(children=Y_chart1),html.Div(children=Y_chart2)],style={'display':'flex'}),
             html.Div(className='chart-item', children=[html.Div(children=Y_chart3),html.Div(children=Y_chart4)],style={'display': 'flex'})
             ]
-    #else:
-       # return None
+    else:
+	return None
 
 # Run the Dash app
 if __name__ == '__main__':
