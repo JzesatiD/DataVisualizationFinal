@@ -48,12 +48,12 @@ app.layout = html.Div([
 				'value' : 'Recession Period Statistics'}
 		     ], 
             placeholder='Select a report type', value = 'Select Statistics', 
-	    style = {'textAlign': 'center', 'color': '#503D36', 'font-size': 20}
+	        style = {'textAlign': 'center', 'color': '#503D36', 'font-size': 20}
         )
     ]),
     html.Div(dcc.Dropdown(
-            id='select-year',
-            options=[{'label': i, 'value': i} for i in year_list], #year list?
+        id='select-year',
+        options=[{'label': i, 'value': i} for i in year_list], #year list?
 	    placeholder = 'Select-year', 
         value='Select-year',
 	    style = {'textAlign': 'center', 'color': '#503D36', 'font-size': 20}
@@ -127,9 +127,9 @@ def update_output_container(selected_statistics, input_year):
 	# Hint:Use unemployment_rate,Vehicle_Type and Automobile_Sales columns
         unemp_data= recession_data.groupby(['Vehicle_Type','unemployment_rate'])['Automobile_Sales'].mean().reset_index()
         R_chart4 = dcc.Graph(figure=px.bar(unemp_data,
-        x='uneemployment_rate',
-        y='Vehicle_Type',
-	    color = 'Automobile_Sales', 
+        x='unemployment_rate',
+        y='Automobile_Sales',
+	    color = 'Vehicle_Type', 
         labels={'unemployment_rate': 'Unemployment Rate', 
 	    'Automobile_Sales': 'Average Automobile Sales'},
         title='Effect of Unemployment Rate on Vehicle Type and Sales'))
@@ -141,7 +141,7 @@ def update_output_container(selected_statistics, input_year):
 # TASK 2.6: Create and display graphs for Yearly Report Statistics
  # Yearly Statistic Report Plots
     # Check for Yearly Statistics.                             
-    elif (input_year and selected_statistics=='Yearly Statistics') :
+    elif (input_year and selected_statistics=='Yearly Statistics'):
         yearly_data = data[data['Year'] == input_year]
                               
 #plot 1 Yearly Automobile sales using line chart for the whole period.
@@ -151,7 +151,7 @@ def update_output_container(selected_statistics, input_year):
         Y_chart1 = dcc.Graph(figure=px.line(yas, 
 		    x = 'Year', 
             y = 'Automobile_Sales',
-		    title='Average Yearly Automobile Sales'))
+		    title='Average Yearly Automobile Sales{}'.format(input_year)))
             
 # Plot 2 Total Monthly Automobile sales using line chart.
         # grouping data for plotting.
@@ -160,16 +160,16 @@ def update_output_container(selected_statistics, input_year):
         Y_chart2 = dcc.Graph(figure=px.line(mas,
             x='Month',
             y='Automobile_Sales',
-            title='Total Monthly Automobile Sales'))
+            title="Total Monthly Automobile Sales{}".format(input_year)))
 
   # Plot 3 bar chart for average number of vehicles sold during the given year
          # grouping data for plotting.
          # Hint:Use the columns Year and Automobile_Sales
-        avr_vdata = yearly_data.groupby('Year')['Automobile_Sales'].mean().reset_index()
+    avr_vdata = yearly_data.groupby('Vehicle_Type')['Automobile_Sales'].mean().reset_index()
     Y_chart3 = dcc.Graph(figure = px.bar(avr_vdata,
-		x ='Year',
+		x ='Vehicle_Type',
 		y ='Automobile_Sales',
-		color = 'Vehicle_type',
+		#color = 'Vehicle_type',
         title='Average Vehicles Sold by Vehicle Type in the year {}'.format(input_year)))
 
     # Plot 4 Total Advertisement Expenditure for each vehicle using pie chart
@@ -193,4 +193,3 @@ def update_output_container(selected_statistics, input_year):
 # Run the Dash app
 if __name__ == '__main__':
     app.run_server(debug=True)
-
