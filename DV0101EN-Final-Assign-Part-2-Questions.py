@@ -85,7 +85,6 @@ def update_input_container(selected_statistics):
 	Input(component_id='select-year', component_property='value')]
 )
 
-
 def update_output_container(selected_statistics, input_year):
     if selected_statistics == 'Recession Period Statistics':
         # Filter the data for recession periods
